@@ -20,7 +20,7 @@ NSString * const kSelectPresetNotification = @"SolanumSelectPresetNotification";
 {
   [super viewDidLoad];
 
-  [self.tableView setAccessibilityLabel:@"Presets List"];
+  [self.tableView setAccessibilityLabel:@"Presets List"]; //that's how we identify element in view using AccessibilityLabels. Most of accessibilityLabels we can add in storyboard, but some (like tableView) we have to add programatically
   [self.tableView setIsAccessibilityElement:YES];
 }
 
@@ -37,7 +37,6 @@ NSString * const kSelectPresetNotification = @"SolanumSelectPresetNotification";
       @{ @"name": @"Slacker Pro+", @"workTime": @5, @"breakTime": @25, @"reps": @1 },
     ];
   });
-
   return presets;
 }
 
