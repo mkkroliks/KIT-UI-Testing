@@ -104,5 +104,34 @@
     [KIFUITestActor setDefaultTimeout:10];
 }
 
+-(void)test40StartTimerAndGiveUp {
+    [tester tapViewWithAccessibilityLabel:@"Timer"];
+    
+    [tester clearTextFromAndThenEnterText:@"Give Up" intoViewWithAccessibilityLabel:@"Task Name"];
+    [tester tapViewWithAccessibilityLabel:@"done"];
+    [self selectPresetAtIndex:2];
+    
+    [tester tapViewWithAccessibilityLabel:@"Start Working"];
+    [tester waitForTimeInterval:3];
+    
+    [tester tapViewWithAccessibilityLabel:@"Give Up"];
+    [[tester usingTimeout:1]waitForViewWithAccessibilityLabel:@"Start Working"];
+}
+
+-(void)test50SwipeToDeleteHistoryItem {
+    [tester tapViewWithAccessibilityLabel:@"History"];
+    
+    UITableView *tableView = (UITableView *)[tester waitForViewWithAccessibilityLabel:@"History List"];
+    NSInteger originalHistoryCount = [tableView numberOfRowsInSection:0];
+    STAssertTrue(originalHistoryCount>0, @"There should be at least 1 history item");
+    
+    [tester swipeViewWithAccessibilityLabel:@"Section 0 Row 0" inDirection:KIFSwipeDirectionLeft];
+    [tester tapViewWithAccessibilityLabel:@"Delete"];
+    
+    [tester waitForTimeInterval:1];
+    NSInteger currentHistoryCount = [tableView numberOfRowsInSection:0];
+    STAssertTrue(currentHistoryCount == originalHistoryCount-1, @"The history item was not deleted");
+}
+
 
 @end
